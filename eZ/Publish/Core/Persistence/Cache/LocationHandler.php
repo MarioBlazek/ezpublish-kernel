@@ -66,7 +66,8 @@ class LocationHandler extends AbstractInMemoryPersistenceHandler implements Loca
             static function (Location $location) use ($keySuffix, $getLocationKeysFn) {
                 return $getLocationKeysFn($location, $keySuffix);
             },
-            $keySuffix
+            $keySuffix,
+            ['location' => $locationId, 'translations' => $translations, 'alwaysAvailable' => $useAlwaysAvailable]
         );
     }
 
@@ -85,7 +86,8 @@ class LocationHandler extends AbstractInMemoryPersistenceHandler implements Loca
             static function (Location $location) use ($keySuffix, $getLocationKeysFn) {
                 return $getLocationKeysFn($location, $keySuffix);
             },
-            $keySuffix
+            $keySuffix,
+            ['location' => $locationIds, 'translations' => $translations, 'alwaysAvailable' => $useAlwaysAvailable]
         );
     }
 
@@ -192,7 +194,8 @@ class LocationHandler extends AbstractInMemoryPersistenceHandler implements Loca
             static function (Location $location) use ($keySuffix, $getLocationKeysFn) {
                 return $getLocationKeysFn($location, $keySuffix);
             },
-            $keySuffix
+            $keySuffix,
+            ['location' => $remoteId, 'translations' => $translations, 'alwaysAvailable' => $useAlwaysAvailable]
         );
     }
 
