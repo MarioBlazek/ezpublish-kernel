@@ -122,9 +122,11 @@ class ContentHandler extends AbstractInMemoryPersistenceHandler implements Conte
             },
             $this->getContentTags,
             static function (Content $content) use ($keySuffix) {
+                // Version number & translations is part of keySuffix here and depends on what user asked for
                 return ['ez-content-' . $content->versionInfo->contentInfo->id . $keySuffix];
             },
-            $keySuffix
+            $keySuffix,
+            ['content' => $contentId, 'version' => $versionNo, 'translations' => $translations]
         );
     }
 
@@ -132,7 +134,6 @@ class ContentHandler extends AbstractInMemoryPersistenceHandler implements Conte
     {
         $keySuffix = '-' . (empty($translations) ? self::ALL_TRANSLATIONS_KEY : implode('|', $translations));
 
-        // @todo then change to have several in-memory cache pools again (which is safe now since we decorate pool and handel it there)
         return $this->getMultipleCacheValues(
             $contentIds,
             'ez-content-',
@@ -141,9 +142,11 @@ class ContentHandler extends AbstractInMemoryPersistenceHandler implements Conte
             },
             $this->getContentTags,
             static function (Content $content) use ($keySuffix) {
+                // Version number & translations is part of keySuffix here and depends on what user asked for
                 return ['ez-content-' . $content->versionInfo->contentInfo->id . $keySuffix];
             },
-            $keySuffix
+            $keySuffix,
+            ['content' => $contentIds, 'translations' => $translations]
         );
     }
 
@@ -159,7 +162,9 @@ class ContentHandler extends AbstractInMemoryPersistenceHandler implements Conte
                 return $this->persistenceHandler->contentHandler()->loadContentInfo($contentId);
             },
             $this->getContentInfoTags,
-            $this->getContentInfoKeys
+            $this->getContentInfoKeys,
+            '',
+            ['content' => $contentId]
         );
     }
 
@@ -172,7 +177,9 @@ class ContentHandler extends AbstractInMemoryPersistenceHandler implements Conte
                 return $this->persistenceHandler->contentHandler()->loadContentInfoList($cacheMissIds);
             },
             $this->getContentInfoTags,
-            $this->getContentInfoKeys
+            $this->getContentInfoKeys,
+            '',
+            ['content' => $contentIds]
         );
     }
 
@@ -188,7 +195,9 @@ class ContentHandler extends AbstractInMemoryPersistenceHandler implements Conte
                 return $this->persistenceHandler->contentHandler()->loadContentInfoByRemoteId($remoteId);
             },
             $this->getContentInfoTags,
-            $this->getContentInfoKeys
+            $this->getContentInfoKeys,
+            '',
+            ['content' => $remoteId]
         );
     }
 
