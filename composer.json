@@ -6,6 +6,12 @@
     "suggest": {
         "php-64bit": "For support of more than 30 languages, a 64bit php installation on all involved prod/dev machines is required"
     },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../doctrine-dbal-schema"
+        }
+    ],
     "require": {
         "php": "^7.1",
         "ext-ctype": "*",
@@ -32,7 +38,6 @@
         "ezsystems/doctrine-dbal-schema": "^0.1@dev",
         "symfony-cmf/routing": "^2.1",
         "kriswallsmith/buzz": "^0.17.2",
-        "sensio/distribution-bundle": "^5.0.22",
         "nelmio/cors-bundle": "^1.5.0",
         "hautelook/templated-uri-bundle": "^2.1",
         "pagerfanta/pagerfanta": "^2.0",
@@ -50,7 +55,6 @@
         "friendsofphp/php-cs-fixer": "~2.7.5",
         "phpunit/phpunit": "^7.0",
         "matthiasnoback/symfony-dependency-injection-test": "~3.0",
-        "symfony/assetic-bundle": "~2.8.2",
         "ezsystems/behatbundle": "^6.4"
     },
     "conflict": {
@@ -73,10 +77,7 @@
         }
     },
     "config": {
-        "process-timeout": 3000,
-        "platform": {
-            "php": "7.1"
-        }
+        "process-timeout": 3000
     },
     "scripts": {
         "fix-cs": "php-cs-fixer fix -v --show-progress=estimating",

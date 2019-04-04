@@ -9,7 +9,7 @@
 namespace eZ\Bundle\EzPublishRestBundle\DependencyInjection\Security;
 
 use Symfony\Bundle\SecurityBundle\DependencyInjection\Security\Factory\FormLoginFactory;
-use Symfony\Component\DependencyInjection\DefinitionDecorator;
+use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\Reference;
 
 class RestSessionBasedFactory extends FormLoginFactory
@@ -30,7 +30,7 @@ class RestSessionBasedFactory extends FormLoginFactory
     protected function createListener($container, $id, $config, $userProvider)
     {
         $listenerId = $this->getListenerId();
-        $listener = new DefinitionDecorator($listenerId);
+        $listener = new ChildDefinition($listenerId);
         $listener->replaceArgument(2, $id);
 
         /* @var \Symfony\Component\DependencyInjection\ContainerBuilder $container */

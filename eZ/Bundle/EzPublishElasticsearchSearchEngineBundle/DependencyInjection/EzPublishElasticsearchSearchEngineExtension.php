@@ -8,7 +8,7 @@
  */
 namespace eZ\Bundle\EzPublishElasticsearchSearchEngineBundle\DependencyInjection;
 
-use Symfony\Component\DependencyInjection\DefinitionDecorator;
+use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -96,19 +96,19 @@ class EzPublishElasticsearchSearchEngineExtension extends Extension
 
         // Http client
         $httpClientId = static::HTTP_CLIENT_ID . ".$connectionName";
-        $httpClientDef = new DefinitionDecorator(self::HTTP_CLIENT_ID);
+        $httpClientDef = new ChildDefinition(self::HTTP_CLIENT_ID);
         $httpClientDef->replaceArgument(0, $connectionParams['server']);
         $container->setDefinition($httpClientId, $httpClientDef);
 
         // Content search gateway
-        $contentSearchGatewayDef = new DefinitionDecorator(self::CONTENT_SEARCH_GATEWAY_ID);
+        $contentSearchGatewayDef = new ChildDefinition(self::CONTENT_SEARCH_GATEWAY_ID);
         $contentSearchGatewayDef->replaceArgument(0, new Reference($httpClientId));
         $contentSearchGatewayDef->replaceArgument(5, $connectionParams['index_name']);
         $contentSearchGatewayId = self::CONTENT_SEARCH_GATEWAY_ID . ".$connectionName";
         $container->setDefinition($contentSearchGatewayId, $contentSearchGatewayDef);
 
         // Location search gateway
-        $locationSearchGatewayDef = new DefinitionDecorator(self::LOCATION_SEARCH_GATEWAY_ID);
+        $locationSearchGatewayDef = new ChildDefinition(self::LOCATION_SEARCH_GATEWAY_ID);
         $locationSearchGatewayDef->replaceArgument(0, new Reference($httpClientId));
         $locationSearchGatewayDef->replaceArgument(5, $connectionParams['index_name']);
         $locationSearchGatewayId = self::LOCATION_SEARCH_GATEWAY_ID . ".$connectionName";
